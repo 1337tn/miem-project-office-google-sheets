@@ -30,22 +30,18 @@ result = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID,
 
 all_data = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='A2:E671').execute()['values']
 
-range_value_data_list = []
 
-deltaListcolNames = ["название проекта", "тип проекта"]
-deltaListcolVals = sheet.values().get(spreadsheetId=SAMPLE_SPREADSHEET_ID, range='B2:D671').execute()['values']
-width = 1
-height = 1
-for i in range (0,len(deltaListcolNames) ):
-        rangeItem = deltaListcolNames[i]
-        print(" the value for rangeItem is : ", rangeItem)
-        batch_input_value = str(deltaListcolVals[i])
-        print(" the value for batch_input_value is : ", batch_input_value)
-        # construct the data structure for the value
-        grid = [[None] * width for i in range(height)]
-        grid[0][0] = batch_input_value
-
-        range_value_item_str = { 'range': rangeItem, 'values': (grid) }
-        range_value_data_list.append(range_value_item_str)
-
-print(range_value_data_list)
+values = [
+    [
+        "HELLO", "HELLO"
+    ],
+    [
+        "BYE", "BYE", "BYE"
+    ]
+]
+body = {
+  'values': values
+}
+result = service.spreadsheets().values().update(
+    spreadsheetId=SAMPLE_SPREADSHEET_ID, range="A2:D3",
+    valueInputOption="RAW", body=body).execute()
